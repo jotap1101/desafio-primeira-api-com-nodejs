@@ -1,79 +1,68 @@
 import fastify from "fastify";
-import crypto from "node:crypto";
+import { db } from "./src/db/index.ts";
+import { coursesTable } from "./src/db/schema.ts";
+import { eq } from "drizzle-orm";
 
-const envToLogger = {
-  development: {
+const server = fastify({
+  logger: {
     transport: {
-      target: 'pino-pretty',
+      target: "pino-pretty",
       options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname',
+        translateTime: "HH:MM:ss Z",
+        ignore: "pid,hostname",
       },
     },
   },
-  production: true,
-  test: false,
-}
-
-const environment = (process.env.NODE_ENV ?? "development") as keyof typeof envToLogger;
-
-const server = fastify({
-  logger: envToLogger[environment] ?? true
 });
 
-const courses = [
-  {
-    id: "1",
-    title: "Curso de Node.js",
-  },
-  {
-    id: "2",
-    title: "Curso de React",
-  },
-  {
-    id: "3",
-    title: "Curso de React Native",
-  },
-];
+server.get("/courses", async (request, reply) => {
+  const result = await db.select().from(coursesTable);
 
-server.get("/courses", (request, reply) => {
-  return reply.status(200).send({ courses });
+  return reply.status(200).send({ courses: result });
 });
 
-server.get("/courses/:id", (request, reply) => {
+server.get("/courses/:id", async (request, reply) => {
   type Params = {
     id: string;
   };
 
-  const { id } = request.params as Params;
-  const course = courses.find((course) => course.id === id);
+  const params = request.params as Params;
+  const courseId = params.id;
+  const result = await db
+    .select()
+    .from(coursesTable)
+    .where(eq(coursesTable.id, courseId));
 
-  if (!course) {
+  if (result.length === 0) {
     return reply.status(404).send({ message: "Course not found" });
   }
 
-  return { course };
+  return reply.status(200).send({ course: result[0] });
 });
 
-server.post("/courses", (request, reply) => {
+server.post("/courses", async (request, reply) => {
   type Body = {
     title: string;
+    description: string | null;
   };
 
-  const { title } = request.body as Body;
+  const body = request.body as Body;
+  const courseTitle = body.title;
 
-  if (!title) {
+  if (!courseTitle) {
     return reply.status(400).send({ message: "Title is required" });
   }
 
-  const course = {
-    id: crypto.randomUUID(),
-    title,
-  };
+  const result = await db
+    .insert(coursesTable)
+    .values({ title: courseTitle, description: body.description })
+    .returning();
 
-  courses.push(course);
-
-  return reply.status(201).send({ course });
+  return reply.status(201).send({
+    id: result[0].id,
+    title: result[0].title,
+    description: result[0].description,
+  });
 });
 
 server.listen({ port: 3333 }).then(() => {
