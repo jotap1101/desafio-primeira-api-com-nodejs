@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:latest
-    container_name: desafio-db
+    container_name: desafio-primeira-api-com-nodejs-db
     ports:
       - "5432:5432"
     environment:
