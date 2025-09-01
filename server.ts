@@ -1,4 +1,5 @@
 import { fastifySwagger } from "@fastify/swagger";
+import scalarAPIReference from "@scalar/fastify-api-reference";
 import fastify from "fastify";
 import {
   jsonSchemaTransform,
@@ -9,7 +10,6 @@ import {
 import { createCourseRoute } from "./src/routes/create-course.ts";
 import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts";
 import { getCoursesRoute } from "./src/routes/get-courses.ts";
-import scalarAPIReference from "@scalar/fastify-api-reference";
 
 const server = fastify({
   logger: {
