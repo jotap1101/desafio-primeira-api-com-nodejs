@@ -1,6 +1,5 @@
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
-import { eq } from "drizzle-orm";
 import fastify from "fastify";
 import {
   jsonSchemaTransform,
@@ -8,9 +7,9 @@ import {
   validatorCompiler,
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import { z } from "zod";
-import { db } from "./src/db/index.ts";
-import { coursesTable } from "./src/db/schema.ts";
+import { createCourseRoute } from "./src/routes/create-course.ts";
+import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts";
+import { getCoursesRoute } from "./src/routes/get-courses.ts";
 
 const server = fastify({
   logger: {
@@ -24,8 +23,6 @@ const server = fastify({
   },
 }).withTypeProvider<ZodTypeProvider>();
 
-server.setValidatorCompiler(validatorCompiler);
-server.setSerializerCompiler(serializerCompiler);
 server.register(fastifySwagger, {
   openapi: {
     info: {
@@ -66,69 +63,12 @@ server.register(fastifySwaggerUi, {
   routePrefix: "/docs",
 });
 
-server.get("/courses", async (request, reply) => {
-  const result = await db.select().from(coursesTable);
+server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
-  return reply.status(200).send({ courses: result });
-});
-
-server.get(
-  "/courses/:id",
-  {
-    schema: {
-      params: z.object({
-        id: z.uuid(),
-      }),
-    },
-  },
-  async (request, reply) => {
-    const courseId = request.params.id;
-    const result = await db
-      .select()
-      .from(coursesTable)
-      .where(eq(coursesTable.id, courseId));
-
-    if (result.length === 0) {
-      return reply.status(404).send({ message: "Course not found" });
-    }
-
-    return reply.status(200).send({ course: result[0] });
-  }
-);
-
-server.post(
-  "/courses",
-  {
-    schema: {
-      body: z.object({
-        title: z
-          .string()
-          .min(5, { message: "Title must be at least 5 characters long" })
-          .max(100, { message: "Title must be at most 100 characters long" }),
-        description: z
-          .string()
-          .max(500, {
-            message: "Description must be at most 500 characters long",
-          })
-          .nullable(),
-      }),
-    },
-  },
-  async (request, reply) => {
-    const courseTitle = request.body.title;
-    const courseDescription = request.body.description;
-    const result = await db
-      .insert(coursesTable)
-      .values({ title: courseTitle, description: courseDescription })
-      .returning();
-
-    return reply.status(201).send({
-      id: result[0].id,
-      title: result[0].title,
-      description: result[0].description,
-    });
-  }
-);
+server.register(getCoursesRoute);
+server.register(getCourseByIdRoute);
+server.register(createCourseRoute);
 
 server.listen({ port: 3333 }).then(() => {
   console.log("Server is listening on port 3333");
