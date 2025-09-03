@@ -1,5 +1,4 @@
-import { text } from "drizzle-orm/pg-core";
-import { integer, pgTable, varchar, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
@@ -11,4 +10,14 @@ export const coursesTable = pgTable("courses", {
   id: uuid().primaryKey().defaultRandom(),
   title: varchar({ length: 255 }).notNull().unique(),
   description: text(),
+});
+
+export const enrollmentsTable = pgTable("enrollments", {
+  userId: uuid()
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  courseId: uuid()
+    .notNull()
+    .references(() => coursesTable.id, { onDelete: "cascade" }),
+  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
