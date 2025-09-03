@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --env-file .env --watch --experimental-strip-types server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "node --env-file .env src/db/seed.ts"
+    "db:seed": "node --env-file .env src/db/seed.ts",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
