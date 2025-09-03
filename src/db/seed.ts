@@ -48,73 +48,51 @@ async function seed() {
       },
     ])
     .returning();
-  const coursesInsert = await db
-    .insert(coursesTable)
-    .values([
-      {
-        title: faker.lorem.words(4),
-        description: faker.lorem.paragraph(),
-      },
-      {
-        title: faker.lorem.words(4),
-        description: faker.lorem.paragraph(),
-      },
-      {
-        title: faker.lorem.words(4),
-        description: faker.lorem.paragraph(),
-      },
-      {
-        title: faker.lorem.words(4),
-        description: faker.lorem.paragraph(),
-      },
-      {
-        title: faker.lorem.words(4),
-        description: faker.lorem.paragraph(),
-      },
-    ])
-    .returning();
+
+  const courses = await db.select().from(coursesTable);
+
   const enrollmentsInsert = await db
     .insert(enrollmentsTable)
     .values([
       {
         userId: usersInsert[0].id,
-        courseId: coursesInsert[0].id,
+        courseId: courses[0].id,
       },
       {
         userId: usersInsert[1].id,
-        courseId: coursesInsert[0].id,
+        courseId: courses[0].id,
       },
       {
         userId: usersInsert[2].id,
-        courseId: coursesInsert[1].id,
+        courseId: courses[1].id,
       },
       {
         userId: usersInsert[3].id,
-        courseId: coursesInsert[1].id,
+        courseId: courses[1].id,
       },
       {
         userId: usersInsert[4].id,
-        courseId: coursesInsert[2].id,
+        courseId: courses[2].id,
       },
       {
         userId: usersInsert[5].id,
-        courseId: coursesInsert[2].id,
+        courseId: courses[2].id,
       },
       {
         userId: usersInsert[6].id,
-        courseId: coursesInsert[3].id,
+        courseId: courses[3].id,
       },
       {
         userId: usersInsert[7].id,
-        courseId: coursesInsert[3].id,
+        courseId: courses[3].id,
       },
       {
         userId: usersInsert[8].id,
-        courseId: coursesInsert[4].id,
+        courseId: courses[4].id,
       },
       {
         userId: usersInsert[9].id,
-        courseId: coursesInsert[4].id,
+        courseId: courses[4].id,
       },
     ])
     .returning();
