@@ -3,7 +3,6 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { db } from "../db/index.ts";
 import { coursesTable, enrollmentsTable } from "../db/schema.ts";
-import id from "zod/v4/locales/id.js";
 
 export const getCoursesRoute: FastifyPluginAsyncZod = async (server) => {
   server.get(
