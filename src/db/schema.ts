@@ -13,6 +13,7 @@ export const coursesTable = pgTable("courses", {
 });
 
 export const enrollmentsTable = pgTable("enrollments", {
+  id: uuid().primaryKey().defaultRandom(),
   userId: uuid()
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
