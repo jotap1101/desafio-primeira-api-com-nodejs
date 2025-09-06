@@ -11,5 +11,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  db_test:
+    image: postgres:latest
+    container_name: desafio-primeira-api-com-nodejs-db-test
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_TEST}
+      POSTGRES_USER: ${POSTGRES_USER_TEST}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_TEST}
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
 volumes:
   postgres_data:
+  postgres_test_data:
