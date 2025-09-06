@@ -5,7 +5,7 @@ import { server } from "../app.ts";
 test("create course", async () => {
   await server.ready();
 
-  const uniqueTitle = `Curso de Go ${Date.now()}`;
+  const uniqueTitle = `Curso Teste ${Date.now()}`;
   const response = await request(server.server)
     .post("/courses")
     .set("Content-Type", "application/json")
