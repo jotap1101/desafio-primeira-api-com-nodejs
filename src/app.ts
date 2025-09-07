@@ -10,6 +10,7 @@ import {
 import { createCourseRoute } from "../src/routes/create-course.ts";
 import { getCourseByIdRoute } from "../src/routes/get-course-by-id.ts";
 import { getCoursesRoute } from "../src/routes/get-courses.ts";
+import { loginRoute } from "./routes/login.ts";
 
 const server = fastify({
   logger: {
@@ -71,5 +72,7 @@ server.setSerializerCompiler(serializerCompiler);
 server.register(getCoursesRoute);
 server.register(getCourseByIdRoute);
 server.register(createCourseRoute);
+
+server.register(loginRoute);
 
 export { server };
