@@ -1,5 +1,5 @@
 {
-  "id": "1f23611c-b836-48f0-9baf-3d95ad58ed37",
+  "id": "cca6e7e1-bdd2-4d5c-8222-a3acdd440ec5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -187,7 +187,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "public",
+      "values": [
+        "student",
+        "manager"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},
