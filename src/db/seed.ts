@@ -9,47 +9,77 @@ async function seed() {
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
       {
         name: faker.person.fullName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
+      },
+      {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
+      },
+      {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        role: faker.helpers.arrayElement(["student", "manager"]),
       },
     ])
     .returning();
-
-  console.log(usersInsert.map((user) => user.id));
 
   const coursesInsert = await db
     .insert(coursesTable)
