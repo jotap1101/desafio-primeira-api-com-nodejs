@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1755737276122,
-      "tag": "0000_deep_sugar_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1755737647081,
-      "tag": "0001_neat_scrambler",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1756858709929,
-      "tag": "0002_panoramic_lionheart",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1756858788684,
-      "tag": "0003_freezing_wild_pack",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1756859947826,
-      "tag": "0004_optimal_namora",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1756861459779,
-      "tag": "0005_lumpy_odin",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1756862392440,
-      "tag": "0006_lying_the_initiative",
+      "when": 1757201902988,
+      "tag": "0000_absent_thunderbolt_ross",
       "breakpoints": true
     }
   ]
