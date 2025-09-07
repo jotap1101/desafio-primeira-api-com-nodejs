@@ -4,10 +4,8 @@ services:
     container_name: desafio-primeira-api-com-nodejs-db
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -16,10 +14,8 @@ services:
     container_name: desafio-primeira-api-com-nodejs-db-test
     ports:
       - "5433:5432"
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB_TEST}
-      POSTGRES_USER: ${POSTGRES_USER_TEST}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_TEST}
+    env_file:
+      - .env.test
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
 
