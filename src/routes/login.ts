@@ -1,6 +1,7 @@
 import { verify } from "argon2";
 import { eq } from "drizzle-orm";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { db } from "../db/index.ts";
 import { usersTable } from "../db/schema.ts";
@@ -22,6 +23,15 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) => {
               message: "Password must be at most 100 characters long",
             }),
         }),
+        response: {
+          201: z.object({
+            message: z.string(),
+            token: z.string(),
+          }),
+          401: z.object({
+            message: z.string(),
+          }),
+        },
       },
     },
     async (request, reply) => {
@@ -42,7 +52,15 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) => {
         return reply.status(401).send({ message: "Invalid email or password" });
       }
 
-      return reply.status(201).send({ message: "User logged in" });
+      const token = jwt.sign(
+        {
+          sub: user.id,
+          role: user.role,
+        },
+        process.env.JWT_SECRET!
+      );
+
+      return reply.status(201).send({ message: "User logged in", token });
     }
   );
 };
