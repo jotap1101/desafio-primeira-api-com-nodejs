@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
 import request from "supertest";
+import { expect, test } from "vitest";
 import { server } from "../app.ts";
 
 test("create course", async () => {
