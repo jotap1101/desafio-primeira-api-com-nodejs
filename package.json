@@ -12,7 +12,7 @@
     "db:migrate:test": "dotenv -e .env.test drizzle-kit migrate",
     "db:seed:test": "dotenv -e .env.test tsx src/db/seed.ts",
     "db:studio:test": "dotenv -e .env.test drizzle-kit studio",
-    "test": "dotenv -e .env.test vitest run --coverage",
+    "test": "dotenv -e .env.test vitest run",
     "coverage": "vitest run --coverage"
   },
   "keywords": [],
