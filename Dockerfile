@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
@@ -37,3 +38,16 @@ COPY --from=build /app /app
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD [ "node", "index.js" ]
+=======
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY . ./
+
+RUN npm ci --only=production
+
+EXPOSE 3333
+
+CMD ["node", "src/server.ts"]
+>>>>>>> 048fcb8 (feat: add Dockerfile and .dockerignore for containerization support)
