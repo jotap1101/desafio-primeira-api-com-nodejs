@@ -3,11 +3,17 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { db } from "../db/index.ts";
 import { coursesTable, enrollmentsTable } from "../db/schema.ts";
+import { checkUserRole } from "./hooks/check-user-role.ts";
+import { checkRequestJWT } from "./hooks/check-request-jwt.ts";
 
 export const getCoursesRoute: FastifyPluginAsyncZod = async (server) => {
   server.get(
     "/courses",
     {
+      preHandler: [
+        checkRequestJWT,
+        checkUserRole("manager"),
+      ],
       schema: {
         tags: ["Courses"],
         summary: "Get all courses",
@@ -17,8 +23,8 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async (server) => {
             .string()
             .optional()
             .describe("Search term for course titles"),
-          orderBy: z.enum(["title"]).optional().default("title"),
-          page: z.coerce.number().optional().default(1),
+          orderBy: z.enum(["title"]).optional().default("title").describe("Order by field"),
+          page: z.coerce.number().optional().default(1).describe("Page number for pagination"),
         }),
         response: {
           200: z

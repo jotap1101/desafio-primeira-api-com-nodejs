@@ -18,5 +18,6 @@ test("user can login", async () => {
   expect(response.status).toBe(201);
   expect(response.body).toEqual({
     message: "User logged in",
+    token: expect.any(String),
   });
 });

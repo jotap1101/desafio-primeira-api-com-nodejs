@@ -1,14 +1,17 @@
 import request from "supertest";
 import { expect, test } from "vitest";
 import { server } from "../app.ts";
+import { makeAuthenticatedUser } from "../tests/factories/make-user.ts";
 
 test("create course", async () => {
   await server.ready();
 
+  const { token } = await makeAuthenticatedUser("manager");
   const uniqueTitle = `Curso Teste ${Date.now()}`;
   const response = await request(server.server)
     .post("/courses")
     .set("Content-Type", "application/json")
+    .set("Authorization", token)
     .send({
       title: uniqueTitle,
       description:
