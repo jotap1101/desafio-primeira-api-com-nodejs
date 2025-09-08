@@ -1,10 +1,10 @@
 import { fakerPT_BR as faker } from "@faker-js/faker";
+import { hash } from "argon2";
 import { db } from "./index.ts";
 import { coursesTable, enrollmentsTable, usersTable } from "./schema.ts";
-import { hash } from "argon2";
 
 async function seed() {
-  const passwordHash = await hash('123456');
+  const passwordHash = await hash("123456");
 
   const usersInsert = await db
     .insert(usersTable)
