@@ -3,7 +3,7 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { db } from "../db/index.ts";
 import { coursesTable } from "../db/schema.ts";
-import { getAuthenticatedUserFromRequest } from "../get-authenticated-user-from-request.ts";
+import { getAuthenticatedUserFromRequest } from "../utils/get-authenticated-user-from-request.ts";
 import { checkRequestJWT } from "./hooks/check-request-jwt.ts";
 
 export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
