@@ -24,3 +24,4 @@ primary_region = 'gru'
 
 [deploy]
   release_command = 'npm run db:migrate'
+  release_machine = true
