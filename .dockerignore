@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-/.git
-/node_modules
-.dockerignore
-.env
-Dockerfile
-fly.toml
-=======
 node_modules
 .git
 .env
@@ -13,4 +5,3 @@ node_modules
 .vscode
 coverage
 vitest.config.ts
->>>>>>> 048fcb8 (feat: add Dockerfile and .dockerignore for containerization support)
